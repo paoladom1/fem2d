@@ -12,7 +12,7 @@ from .utils import (
 
 
 def run():
-    """Backbone of FEM1D process"""
+    """Backbone of FEM2D process"""
     args = sys.argv[1:]
     # expects 1 argument with the path to the file with gig dat file
     data_filename = args[0]
