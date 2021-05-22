@@ -44,4 +44,4 @@ python -m application <path_to_data_file>
 ```
 where <path_to_data_file> is the path to the .dat file with the input information. 
 
-__Note: do not add the `.dat` extension__
+*Note: do not add the `.dat` extension*
