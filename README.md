@@ -40,8 +40,8 @@ pip install -r requirements.txt
 ### Run the code
 Inside the venv session, run the following line
 ```bash
-python -m application <path_to_data_file>
+python -m application <data_file>
 ```
-where <path_to_data_file> is the path to the .dat file with the input information. 
+where <data_file> is the .dat file with the input information. 
 
 *Note: do not add the `.dat` extension*

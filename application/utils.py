@@ -328,7 +328,7 @@ def post_processing_input(filename, T):
     with open(f"application/data/{filename}.post.res", "w") as f_out:
         f_out.write("GiD Post Results File 1.0\n")
         f_out.write('Result "Temperature" "Load Case 1" 1 Scalar OnNodes\n')
-        f_out.write('ComponentNames "T\n')
+        f_out.write('ComponentNames "T"\n')
         f_out.write("Values\n")
 
         for i, value in enumerate(T):
