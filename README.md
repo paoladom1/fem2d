@@ -5,9 +5,8 @@
 - Python3
 - Pip 20+
 
-## Prepare project
-### Create venv
-
+## Usage
+### Virtual Environment
 #### On Unix Systems:
 ```bash
 python3 -m venv venv
