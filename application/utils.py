@@ -1,6 +1,7 @@
 import numpy as np
 
 from math import sqrt
+from functools import reduce
 from .classes import Node, Element, Mesh, Condition
 
 
@@ -18,10 +19,12 @@ def find_node_in_nodes(node_id, nodes):
 def read_mesh(filename):
     """Reads data from file <filename> to fill the mesh
 
+    :filename: name of the file to be read
+
     :returns: Mesh
 
     """
-    with open(filename) as f_in:
+    with open(f"application/data/{filename}.dat") as f_in:
         # creates array of lines without empty lines
         lines = list(
             map(
@@ -295,16 +298,39 @@ def apply_conditions(neumann_conditions, dirichlet_conditions, K, b):
     return temp_K, temp_b
 
 
-def calculate_fem(K, b):
+def calculate_fem(K, b, conditions):
     """Calculates the FEM value
 
     :K: global K
     :b: global b
+    :conditions: the list of dirichlet conditions to be applied
 
-    :returns: T
+    :returns: the result for T
 
     """
     # get the inverse of K
     K_inv = np.linalg.inv(K)
+    T = K_inv.dot(b)
 
-    return K_inv.dot(b)
+    # insert dirichlet condition values
+    for condition in conditions:
+        T = np.insert(T, condition.node.index, condition.value)
+
+    return list(map(lambda x: round(x, 2), T))
+
+def post_processing_input(filename, T):
+    """Write the GiD post processing input data
+
+    :filename: name of the input file
+    :T: list of T for each node
+
+    """
+    with open(f"application/data/{filename}.post.res", "w") as f_out:
+        f_out.write("GiD Post Results File 1.0\n")
+        f_out.write('Result "Temperature" "Load Case 1" 1 Scalar OnNodes\n')
+        f_out.write('ComponentNames "T\n')
+        f_out.write("Values\n")
+
+        for i, value in enumerate(T):
+            f_out.write("{0}\t{1}\n".format(i + 1, value))
+        f_out.write("End values")

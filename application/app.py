@@ -8,6 +8,7 @@ from .utils import (
     assembly,
     apply_conditions,
     calculate_fem,
+    post_processing_input
 )
 
 
@@ -35,5 +36,7 @@ def run():
     # apply neumann and dirichlet conditions
     K, b = apply_conditions(mesh.neumann_conditions, mesh.dirichlet_conditions, K, b)
 
-    T = calculate_fem(K, b)
+    T = calculate_fem(K, b, mesh.dirichlet_conditions)
+
     print("T: {0}".format(T))
+    post_processing_input(data_filename, T)
